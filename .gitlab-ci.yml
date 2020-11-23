@@ -13,10 +13,11 @@ api-test:
     - apk add --no-cache docker-compose
 
   script:
-    - cd docker/test && docker-compose -p kbj_node_test up --build --abort-on-container-exit
+    - cd docker/test && docker-compose -p kbj_node up --build --abort-on-container-exit
 
   only:
     - dev
+    - master
 
 # dev deploy
 deploy-dev:
@@ -35,4 +36,4 @@ deploy-dev:
         "cd $DEV_PATH/docker/development && docker-compose -p kbj_node up -d --build"
 
   only:
-    - dev
+    - master
