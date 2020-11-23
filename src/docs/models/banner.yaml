@@ -1,0 +1,79 @@
+components:
+  schemas:
+
+    BannerList:
+      type: object
+      properties:
+        total:
+          type: number
+        list:
+          type: array
+          items:
+            $ref: "#/components/schemas/Banner"
+
+    Banner:
+      type: object
+      properties:
+        idx: 
+          type: number
+        id:
+          type: string
+        userId:
+          type: string
+        subject: 
+          type: string
+        type:
+          type: string
+        attachFiles:
+          type: array
+          items:
+            $ref: "#/components/schemas/File"
+        description:
+          type: string
+        link:
+          type: string
+        target:
+          type: string
+        visible:
+          type: boolean
+        visibleStart:
+          type: string
+        visibleEnd:
+          type: string
+        order:
+          type: number
+        createdAt:
+          type: string
+        updatedAt:
+          type: string
+        deletedAt:
+          type: string
+
+    BannerPost:
+      type: object
+      properties:
+        subject:
+          type: string
+        type:
+          type: string
+        attachFiles:
+          type: array
+          example: []
+          items:
+            $ref: "#/components/schemas/File"
+        description:
+          type: string
+        link:
+          type: string
+        target:
+          type: string
+        order:
+          type: number
+        visible:
+          type: boolean
+        visibleStart:
+          type: string
+          example: 2020-01-01T00:00:00.000Z
+        visibleEnd:
+          type: string
+          example: 2030-01-01T00:00:00.000Z

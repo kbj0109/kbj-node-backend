@@ -1,0 +1,46 @@
+paths:
+  /contact:
+    post:
+      tags:
+        - 문의
+      summary: 등록
+      description: "
+        - 회원이라도 name, email 필수\n
+        - 연락처 필수 아님\n
+        - 다중 파일첨부 가능
+      "
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ContactPost"
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Contact"
+
+
+  /contact/file:
+    post:
+      tags:
+        - 문의
+      summary: 파일 첨부
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+              required: 
+                - file
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/File"

@@ -1,0 +1,12 @@
+components:
+  schemas:
+
+    File:
+      type: object
+      properties:
+        id:
+          type: string
+        fileName:
+          type: string
+        fileSize:
+          type: number

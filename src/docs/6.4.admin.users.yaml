@@ -1,0 +1,187 @@
+paths:
+  /admin/users:
+    get:
+      tags:
+        - 관리자 - 회원
+      summary: 목록
+      description: 탈퇴회원 포함
+      parameters:
+        - in: query
+          name: limit
+          default: 10
+          schema:
+            type: number
+        - in: query
+          name: offset
+          default: 0
+          schema:
+            type: number
+        - in: query
+          name: sort
+          default: createDesc
+          schema:
+            type: string
+            enum: [createDesc, createAsc, updateDesc, updateAsc, levelDesc, levelAsc]
+        - in: query
+          name: search
+          schema:
+            type: string
+            enum: [userId, level, name, email, phoneNumber, role]
+        - in: query
+          name: searchKeyword
+          schema:
+            type: string
+        - in: query
+          name: withWithdrawal
+          description : true - 탈퇴회원 포함 / false - 탈퇴회원 미포함
+          schema:
+            type: boolean
+            default: 'false'
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserList"
+
+    post: 
+      tags:
+        - 관리자 - 회원
+      summary: 등록
+      requestBody:
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "#/components/schemas/UserPost"
+                - type: object
+                  properties:
+                    level:
+                      type: number
+                    role:
+                      type: string
+                      example: ""
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - type: object
+                    properties:
+                      idx:
+                        type: number
+                      createdAt:
+                        type: string
+                      updatedAt:
+                        type: string
+                      deletedAt:
+                        type: string
+                  - $ref: "#/components/schemas/User"
+
+  /admin/users/{userId}:
+    get:
+      tags:
+        - 관리자 - 회원
+      summary: 상세
+      description: 탈퇴회원 포함
+      parameters:
+        - in: path
+          name: userId
+          schema:
+            type: string
+          required: true
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - type: object
+                    properties:
+                      idx:
+                        type: number
+                  - $ref: "#/components/schemas/User"
+                  - type: object
+                    properties:
+                      createdAt:
+                        type: string
+                      updatedAt:
+                        type: string
+                      deletedAt:
+                        type: string
+
+    put:
+      tags:
+        - 관리자 - 회원
+      summary: 수정
+      description: "
+        - 탈퇴회원 정보 수정 불가\n
+        - 아이디 수정 불가
+      "
+      parameters:
+        - in: path
+          name: userId
+          schema:
+            type: string
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "#/components/schemas/UserPut"
+                - type: object
+                  properties:
+                    level:
+                      type: number
+                    role:
+                      type: string
+                      example: ""
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - type: object
+                    properties:
+                      idx:
+                        type: number
+                      createdAt:
+                        type: string
+                      updatedAt:
+                        type: string
+                      deletedAt:
+                        type: string
+                  - $ref: "#/components/schemas/User"
+
+    delete:
+      tags:
+        - 관리자 - 회원
+      summary: 삭제
+      parameters:
+        - in: path
+          name: userId
+          schema:
+            type: string
+          required: true
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - type: object
+                    properties:
+                      idx:
+                        type: number
+                  - $ref: "#/components/schemas/User"
+                  - type: object
+                    properties:
+                      createdAt:
+                        type: string
+                      updatedAt:
+                        type: string
+                      deletedAt:
+                        type: string

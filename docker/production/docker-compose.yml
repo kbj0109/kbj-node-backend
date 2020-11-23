@@ -1,0 +1,41 @@
+version: '3.0'
+services:
+  backend:
+    depends_on:
+      - mysql
+    build:
+      context: ../../
+      dockerfile: ./docker/Dockerfile
+    stdin_open: true
+    tty: true
+    env_file:
+      - ../../env/.env.production.local
+    environment:
+      - NODE_ENV=production
+    ports:
+      - 10011:80
+    networks:
+      - backend
+    restart: always
+    volumes:
+      - ../../_data/upload:/app/_data/upload
+      - ../../_data/img:/app/_data/img
+
+  mysql:
+    image: 'mysql:5.7'
+    stdin_open: true
+    tty: true
+    env_file:
+      - ../../env/.env.production.local
+    environment:
+      - TZ=Asia/Seoul
+    ports:
+      - 10021:3306
+    networks:
+      - backend
+    restart: always
+    volumes:
+      - ../../_data/mysql:/var/lib/mysql
+
+networks:
+  backend:

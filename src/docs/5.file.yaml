@@ -1,0 +1,20 @@
+paths:
+  /file/{fileId}:
+    get:
+      tags:
+        - 파일
+      summary: 파일 다운로드 (임시저장)
+      description: 게시물 등록 전 첨부한 첨부파일 다운로드
+      parameters:
+        - in: path
+          name: fileId
+          schema:
+            type: string
+          required: true
+      responses:
+        200:
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary

@@ -1,0 +1,18 @@
+paths:
+  /statistic/visit:
+    post:
+      tags:
+        - 통계
+      summary: 사용자 페이지 이동 기록
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                location:
+                  type: string
+                  required: true
+                  example: /articles/default
+      responses:
+        200:
+          description: 페이지 이동 기록 성공

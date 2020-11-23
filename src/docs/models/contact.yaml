@@ -1,0 +1,84 @@
+components:
+  schemas:
+
+    ContactList:
+      type: object
+      properties:
+        total:
+          type: number
+        list:
+          type: array
+          items:
+            properties:
+              idx:
+                type: number
+              id:
+                type: string
+              userId:
+                type: string
+              subject:
+                type: string
+              attachFiles:
+                type: array
+                items:
+                  $ref: "#/components/schemas/File"
+              name:
+                type: string
+              email:
+                type: string
+              phoneNumber:
+                type: string
+              commentCount:
+                type: number
+              createdAt:
+                type: string
+
+    Contact:
+      type: object
+      properties:
+        id:
+          type: string
+        subject:
+          type: string
+        content:
+          type: string      
+        attachFiles:
+          type: array
+          items:
+            $ref: "#/components/schemas/File"
+        userId:
+          type: string
+        name:
+          type: string
+        email:
+          type: string
+        phoneNumber:
+          type: string
+        createdAt:
+          type: string
+
+    ContactPost:
+      type: object
+      properties:
+        subject:
+          type: string
+          example: 제목
+        content:
+          type: string
+          example: 내용
+        attachFiles:
+          type: array
+          example: []
+          items:
+            $ref: "#/components/schemas/File"
+        name:
+          type: string
+          example: 'guest'
+          required: true
+        email:
+          type: string
+          example: sample@sample.com
+          required: true
+        phoneNumber:
+          type: string
+          example: 01012345678

@@ -1,0 +1,366 @@
+paths:
+  /articles/{boardType}:
+    get:
+      tags:
+        - 게시물
+      summary: 게시물 목록
+      parameters:
+        - in: path
+          name: boardType
+          default: default
+          schema:
+            type: string
+          required: true
+        - in: query
+          name: limit
+          default: 10
+          schema:
+            type: number
+        - in: query
+          name: offset
+          default: 0
+          schema:
+            type: number
+        - in: query
+          name: sort
+          schema:
+            type: string
+            enum: [createDesc, createAsc, updateDesc, updateAsc, viewDesc, viewAsc, likeDesc, likeAsc, commentDesc, commentAsc]
+        - in: query
+          name: search
+          schema:
+            type: string
+            enum: [subject, content, subjectContent, userId]
+        - in: query
+          name: searchKeyword
+          schema:
+            type: string
+        - in: query
+          name: category
+          schema:
+            type: string
+        - in: query
+          name: tag
+          schema:
+            type: string
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ArticleList"
+
+    post:
+      tags:
+        - 게시물
+      summary: 게시물 등록
+      description: "
+        - 비회원일 경우 name, password 필요
+      "
+      parameters:
+        - in: path
+          name: boardType
+          default: default
+          required: true
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ArticlePost"
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Article"
+
+
+  /articles/{boardType}/{articleId}:
+    get: 
+      tags:
+        - 게시물
+      summary: 게시물 상세
+      parameters:
+        - in: path
+          name: boardType
+          default: default          
+          schema:
+            type: string
+          required: true
+        - in: path
+          name: articleId
+          schema:
+            type: string
+          required: true
+        - in: header
+          name: password
+          description: 비회원 한정
+          schema:
+            type: string
+        - in: query
+          name: sort
+          schema:
+            type: string
+            enum: [createDesc, createAsc, updateDesc, updateAsc, viewDesc, viewAsc, likeDesc, likeAsc, commentDesc, commentAsc]
+        - in: query
+          name: search
+          schema:
+            type: string
+            enum: [subject, content, subjectContent, userId]
+        - in: query
+          name: searchKeyword
+          schema:
+            type: string
+        - in: query
+          name: category
+          schema:
+            type: string
+        - in: query
+          name: tag
+          schema:
+            type: string
+        - in: query
+          name: useSideArticles
+          schema:
+            type: boolean
+          default: true
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Article"
+
+    put:
+      tags:
+        - 게시물
+      summary: 게시물 수정
+      description: "
+        - 비회원일 경우 name, password 필요
+        - visibleStart, visibleEnd 값은 ISO String 날짜 형식
+      "
+      parameters:
+        - in: path
+          name: boardType
+          default: default
+          schema:
+            type: string
+          required: true
+        - in: path
+          name: articleId
+          schema:
+            type: string
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ArticlePost"
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Article"
+
+    delete:
+      tags:
+        - 게시물
+      summary: 게시물 삭제
+      description: "
+        - 비회원일 경우 name, password 필요\n
+      "      
+      parameters:
+        - in: path
+          name: boardType
+          default: default
+          schema:
+            type: string
+          required: true
+        - in: path
+          name: articleId
+          schema:
+            type: string
+          required: true
+        - in: header
+          name: password
+          description: 비회원 한정
+          schema:
+            type: string
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Article"
+
+
+  /articles/{boardType}/{articleId}/like:
+    post:
+      tags:
+        - 게시물
+      summary: 게시물 추천
+      parameters:
+        - in: path
+          name: boardType
+          default: default
+          schema:
+            type: string
+          required: true
+        - in: path
+          name: articleId
+          schema:
+            type: string
+          required: true
+      responses:
+        200:
+          content:
+            application/json:
+              properties:
+                postId:
+                  type: string
+                liked:
+                  type: boolean
+                likeCount:
+                  type: number
+
+
+  /articles/{boardType}/img:
+    post: 
+      tags:
+        - 게시물
+      summary: 게시물 이미지 첨부
+      parameters:
+        - in: path
+          name: boardType
+          default: default
+          required: true
+          type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: 이미지 외 불가
+              required: 
+                - file
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/File"
+
+
+  /articles/{boardType}/img/{imgId}: 
+    get: 
+      tags:
+        - 게시물
+      summary: 게시물 이미지 다운로드
+      parameters:
+        - in: path
+          name: boardType
+          default: default
+          schema:
+            type: string
+          required: true
+        - in: path
+          name: imgId
+          schema:
+            type: string
+          required: true
+      responses:
+        200:
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+
+
+  /articles/{boardType}/file:
+    post: 
+      tags:
+        - 게시물
+      summary: 게시물 파일 첨부
+      parameters:
+        - in: path
+          name: boardType
+          default: default
+          required: true
+          type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+              required: 
+                - file
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/File"
+
+
+  /articles/{boardType}/file/{fileId}: 
+    get:
+      tags:
+        - 게시물
+      summary: 게시물 파일 다운로드
+      parameters:
+        - in: path
+          name: boardType
+          default: default
+          schema:
+            type: string
+          required: true
+        - in: path
+          name: fileId
+          schema:
+            type: string
+          required: true
+      responses:
+        200:
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+
+
+  /articles/{boardType}/tags:
+    get:
+      tags:
+        - 게시물
+      summary: 태그 목록
+      parameters:
+        - in: path
+          name: boardType
+          default: default
+          schema:
+            type: string
+          required: true
+        - in: query
+          name: limit
+          schema:
+            type: number
+          default: 30
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string

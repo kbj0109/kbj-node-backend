@@ -1,0 +1,156 @@
+paths:
+  /admin/banners:
+    get:
+      tags:
+        - 관리자 - 배너
+      summary: 목록
+      parameters:
+        - in: query
+          name: limit
+          default: 10
+          schema:
+            type: number
+        - in: query
+          name: offset
+          default: 0
+          schema:
+            type: number
+        - in: query
+          name: sort
+          schema:
+            type: string
+            enum: [createDesc, createAsc, updateDesc, updateAsc]
+        - in: query
+          name: search
+          schema:
+            type: string
+            enum: [subject, type, description, link]
+        - in: query
+          name: searchKeyword
+          schema:
+            type: string
+      responses:
+        200:
+          content:
+            application/octet-stream:
+              schema:
+                $ref: "#/components/schemas/BannerList"
+
+    post:
+      tags:
+        - 관리자 - 배너
+      summary: 등록
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BannerPost"
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Banner"
+
+
+  /admin/banners/{bannerId}:
+    get:
+      tags:
+        - 관리자 - 배너
+      summary: 상세
+      parameters:
+        - in: path
+          name: bannerId
+          schema:
+            type: string
+          required: true
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Banner"
+
+    put:
+      tags:
+        - 관리자 - 배너
+      summary: 수정
+      parameters:
+        - in: path
+          name: bannerId
+          schema:
+            type: string
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BannerPost"
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Banner"
+
+    delete:
+      tags:
+        - 관리자 - 배너
+      summary: 삭제
+      parameters:
+        - in: path
+          name: bannerId
+          schema:
+            type: string
+          required: true
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Banner"
+
+
+  /admin/banners/img:
+    post: 
+      tags:
+        - 관리자 - 배너
+      summary: 이미지 첨부
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: 이미지 외 불가
+              required: 
+                - file
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/File"
+
+
+  /admin/banners/img/{imgId}: 
+    get: 
+      tags:
+        - 관리자 - 배너
+      summary: 이미지 다운로드
+      parameters:
+        - in: path
+          name: imgId
+          schema:
+            type: string
+          required: true
+      responses:
+        200:
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary

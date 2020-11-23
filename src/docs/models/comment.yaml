@@ -1,0 +1,75 @@
+components:
+  schemas:
+
+    CommentList:
+      type: object
+      properties:
+        total:
+          type: number
+        list:
+          type: array
+          items:
+            properties:
+              idx:
+                type: string
+              id:
+                type: string
+              userId:
+                type: string
+              name:
+                type: string
+              postId:
+                type: string
+              boardType:
+                type: string
+              content:
+                type: string
+              likeCount:
+                type: number
+                description: Article 댓글 한정
+              liked:
+                type: boolean
+                description: Article 댓글 한정
+              createdAt:
+                type: string
+
+    Comment:
+      type: object
+      properties:
+        idx:
+          type: string
+        id:
+          type: string
+        userId:
+          type: string
+        name:
+          type: string
+        postId:
+          type: string
+        boardType:
+          type: string
+        content:
+          type: string
+        likeCount:
+          type: number
+          description: Article 댓글 한정
+        liked:
+          type: boolean
+          description: Article 댓글 한정
+        createdAt:
+          type: string
+
+    CommentPost:
+      type: object
+      properties:
+        name:
+          description: Artile 댓글 비회원 한정
+          type: string
+          example: guest
+        password:
+          description: Artile 댓글 비회원 한정
+          type: string
+          example: guest
+        content:
+          type: string
+          example: 답글 내용입니다

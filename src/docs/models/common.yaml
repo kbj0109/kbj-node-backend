@@ -1,0 +1,15 @@
+components:
+  schemas:
+
+    FailResult:
+      description: 실패 응답
+      type: object
+      properties:
+        status:
+          type: number
+        type:
+          type: string
+        message:
+          type: string
+        stack:
+          type: string

@@ -1,0 +1,110 @@
+tags:
+  - name: 인증
+    description: JWT 토큰 인증
+
+paths:
+  /auth/login:
+    post:
+      tags:
+        - 인증
+      summary: 로그인
+      description: "
+        로그인 성공시, Access Token & CSRF Token 발급\n\n
+        **Set-Cookie**\n
+        access_token=abcd12345; Domain=dev.com; Path=/; HttpOnly\n
+        csrf_token=efgh12345; Path=/;
+      "
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                userId:
+                  type: string
+                  required: true
+                  example: sample
+                password:
+                  type: string
+                  required: true
+                  example: sample
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  csrfToken:
+                    type: string
+                  refreshToken:
+                    type: string
+                  refreshExpired:
+                    type: number
+        404:
+          description: 존재하지 않는 아이디 / 비밀번호 불일치
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FailResult"
+
+  /auth/renew:
+    post:
+      tags:
+        - 인증
+      summary: 토큰 갱신
+      description: "
+        - 인증된 회원의 Access Token 및 CSRF Token 갱신\n
+        - refreshExpired에 임박하면 Refresh Token도 갱신\n
+      "
+      parameters:
+        - in: header
+          name: refresh_token
+          schema:
+            type: string
+          required: true
+        - in: header
+          name: csrf_token
+          schema:
+            type: string
+      responses:
+        200:
+          description: "Access Token, CSRF Token 갱신\n\n
+            - refreshToken, refreshExpired는 갱신 요청이 기존 refreshExpired에 임박하여 Refresh Token 갱신될 때 리턴된다
+          "
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  csrfToken:
+                    type: string
+                  accessExpired:
+                    type: number
+                  refreshToken:
+                    type: string
+                    description: Refresh Token 갱신 한정
+                  refreshExpired:
+                    type: number
+                    description: Refresh Token 갱신 한정
+
+  /auth/logout:
+    post:
+      tags:
+        - 인증
+      summary: 회원 로그아웃
+      parameters:
+        - in: header
+          name: csrf_token
+          schema:
+            type: string
+
+  /auth/logout/all:
+    post:
+      tags:
+        - 인증
+      summary: 회원 모든 기기 로그아웃
+      parameters:
+        - in: header
+          name: csrf_token
+          schema:
+            type: string

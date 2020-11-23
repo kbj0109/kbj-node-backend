@@ -1,0 +1,437 @@
+paths:
+  /admin/articles/{boardType}:
+    get:
+      tags:
+        - 관리자 - 게시물
+      summary: 목록
+      parameters:
+        - in: path
+          name: boardType
+          default: default
+          schema:
+            type: string
+          required: true
+        - in: query
+          name: limit
+          default: 10
+          schema:
+            type: number
+        - in: query
+          name: offset
+          default: 0
+          schema:
+            type: number
+        - in: query
+          name: sort
+          schema:
+            type: string
+            enum: [createDesc, createAsc, updateDesc, updateAsc, viewDesc, viewAsc, likeDesc, likeAsc, commentDesc, commentAsc]
+        - in: query
+          name: search
+          schema:
+            type: string
+            enum: [subject, content, subjectContent, userId]
+        - in: query
+          name: searchKeyword
+          schema:
+            type: string
+        - in: query
+          name: category
+          schema:
+            type: string
+        - in: query
+          name: tag
+          schema:
+            type: string
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ArticleList"
+
+    post:
+      tags:
+        - 관리자 - 게시물
+      summary: 등록
+      description: "
+        - visibleStart, visibleEnd 값은 ISO String 날짜 형식
+      "
+      parameters:
+        - in: path
+          name: boardType
+          default: default
+          required: true
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "#/components/schemas/ArticlePost"                
+                - type: object
+                  properties:
+                    visible:
+                      type: boolean
+                      default: true
+                    visibleStart:
+                      type: string
+                      example: 2020-01-01T00:00:00.000Z
+                    visibleEnd:
+                      type: string
+                      example: 2030-01-01T00:00:00.000Z
+                    notice:
+                      type: boolean
+                      default: false
+                    order:
+                      type: number
+                      example: 0
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/Article"
+                  - type: object
+                    properties:
+                      visible:
+                        type: boolean
+                      visibleStart:
+                        type: string
+                      visibleEnd:
+                        type: string
+                      order:
+                        type: number
+
+
+  /admin/articles/{boardType}/{articleId}:
+    get: 
+      tags:
+        - 관리자 - 게시물
+      summary: 상세
+      parameters:
+        - in: path
+          name: boardType
+          default: default          
+          schema:
+            type: string
+          required: true
+        - in: path
+          name: articleId
+          schema:
+            type: string
+          required: true
+        - in: query
+          name: sort
+          schema:
+            type: string
+            enum: [createDesc, createAsc, updateDesc, updateAsc, viewDesc, viewAsc, likeDesc, likeAsc, commentDesc, commentAsc]
+        - in: query
+          name: search
+          schema:
+            type: string
+            enum: [subject, content, subjectContent, userId]
+        - in: query
+          name: searchKeyword
+          schema:
+            type: string
+        - in: query
+          name: category
+          schema:
+            type: string
+        - in: query
+          name: tag
+          schema:
+            type: string
+        - in: query
+          name: useSideArticles
+          schema:
+            type: boolean
+          default: true
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/Article"
+                  - type: object
+                    properties:
+                      visible:
+                        type: boolean
+                      visibleStart:
+                        type: string
+                      visibleEnd:
+                        type: string
+                      order:
+                        type: number
+
+    put:
+      tags:
+        - 관리자 - 게시물
+      summary: 수정
+      description: "
+        - visibleStart, visibleEnd 값은 ISO String 날짜 형식
+      "
+      parameters:
+        - in: path
+          name: boardType
+          default: default
+          schema:
+            type: string
+          required: true
+        - in: path
+          name: articleId
+          schema:
+            type: string
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "#/components/schemas/ArticlePost"                
+                - type: object
+                  properties:
+                    visible:
+                      type: boolean
+                      default: true
+                    visibleStart:
+                      type: string
+                      example: 2020-01-01T00:00:00.000Z
+                    visibleEnd:
+                      type: string
+                      example: 2030-01-01T00:00:00.000Z
+                    notice:
+                      type: boolean
+                      default: false
+                    order:
+                      type: number
+                      example: 0
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/Article"
+                  - type: object
+                    properties:
+                      visible:
+                        type: boolean
+                      visibleStart:
+                        type: string
+                      visibleEnd:
+                        type: string
+                      order:
+                        type: number
+
+    delete:
+      tags:
+        - 관리자 - 게시물
+      summary: 삭제
+      description: "
+        - ',' 구분으로 다수의 articleId 를 보내면 다중삭제 가능
+      "      
+      parameters:
+        - in: path
+          name: boardType
+          default: default
+          schema:
+            type: string
+          required: true
+        - in: path
+          name: articleId
+          schema:
+            type: string
+          required: true
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/Article"
+                  - type: object
+                    properties:
+                      visible:
+                        type: boolean
+                      visibleStart:
+                        type: string
+                      visibleEnd:
+                        type: string
+                      order:
+                        type: number
+
+
+  /admin//articles/{boardType}/{articleId}/like:
+    post:
+      tags:
+        - 관리자 - 게시물
+      summary: 추천
+      parameters:
+        - in: path
+          name: boardType
+          default: default
+          schema:
+            type: string
+          required: true
+        - in: path
+          name: articleId
+          schema:
+            type: string
+          required: true
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  postId:
+                    type: string
+                  liked:
+                    type: boolean
+                  likeCount:
+                    type: number
+
+
+  /admin/articles/{boardType}/img:
+    post: 
+      tags:
+        - 관리자 - 게시물
+      summary: 이미지 첨부
+      parameters:
+        - in: path
+          name: boardType
+          default: default
+          required: true
+          type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: 이미지 외 불가
+              required: 
+                - file
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/File"
+
+
+  /admin/articles/{boardType}/img/{imgId}: 
+    get: 
+      tags:
+        - 관리자 - 게시물
+      summary: 이미지 다운로드
+      parameters:
+        - in: path
+          name: boardType
+          default: default
+          schema:
+            type: string
+          required: true
+        - in: path
+          name: imgId
+          schema:
+            type: string
+          required: true
+      responses:
+        200:
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+
+
+  /admin/articles/{boardType}/file:
+    post: 
+      tags:
+        - 관리자 - 게시물
+      summary: 파일 첨부
+      parameters:
+        - in: path
+          name: boardType
+          default: default
+          required: true
+          type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+              required: 
+                - file
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/File"
+
+
+  /admin/articles/{boardType}/file/{fileId}: 
+    get:
+      tags:
+        - 관리자 - 게시물
+      summary: 파일 다운로드
+      parameters:
+        - in: path
+          name: boardType
+          default: default
+          schema:
+            type: string
+          required: true
+        - in: path
+          name: fileId
+          schema:
+            type: string
+          required: true
+      responses:
+        200:
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+
+
+  /admin/articles/{boardType}/tags:
+    get:
+      tags:
+        - 관리자 - 게시물
+      summary: 태그 목록
+      parameters:
+        - in: path
+          name: boardType
+          default: default
+          schema:
+            type: string
+          required: true
+        - in: query
+          name: limit
+          schema:
+            type: number
+          default: 30
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string

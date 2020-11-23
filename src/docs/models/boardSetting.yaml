@@ -1,0 +1,296 @@
+components:
+  schemas:
+
+    BoardSettingList:
+      type: object
+      properties:
+        total:
+          type: number
+        list:
+          type: array
+          items:
+            properties:
+              id:
+                type: string
+              userId:
+                type: string
+              type:
+                type: string
+              subject:
+                type: string
+              createAuth:
+                type: string
+              createLevel:
+                type: number
+              createRole:
+                type: string
+              readListAuth:
+                type: string
+              readListLevel:
+                type: number
+              readListRole:
+                type: string
+              readAuth:
+                type: string
+              readLevel:
+                type: number
+              readRole:
+                type: string
+              updateAuth:
+                type: string
+              updateLevel:
+                type: number
+              updateRole:
+                type: string
+              deleteAuth:
+                type: string
+              deleteLevel:
+                type: number
+              deleteRole:
+                type: string
+              likeAuth:
+                type: string
+              likeLevel:
+                type: number
+              likeRole:
+                type: string
+              useComment:
+                type: boolean
+              commentCreateAuth:
+                type: string
+              commentCreateLevel:
+                type: number
+              commentCreateRole:
+                type: string
+              commentReadListAuth:
+                type: string
+              commentReadListLevel:
+                type: number
+              commentReadListRole:
+                type: string
+              commentDeleteAuth:
+                type: string
+              commentDeleteLevel:
+                type: number
+              commentDeleteRole:
+                type: string
+              commentLikeAuth:
+                type: string
+              commentLikeLevel:
+                type: number
+              commentLikeRole:
+                type: string
+              fileCreateAuth:
+                type: string
+              fileCreateLevel:
+                type: number
+              fileCreateRole:
+                type: string
+              fileReadAuth:
+                type: string
+              fileReadLevel:
+                type: number
+              fileReadRole:
+                type: string
+              attachImageSize:
+                type: number
+              attachFileSize:
+                type: number
+              attachFileSizeTotal:
+                type: number
+              updater:
+                type: string
+              deleter:
+                type: string
+              createdAt:
+                type: string
+              updatedAt:
+                type: string
+
+    BoardSetting:
+      type: object
+      properties:
+        id:
+          type: string
+        userId:
+          type: string
+        type:
+          type: string
+        subject:
+          type: string
+        createAuth:
+          type: string
+        createLevel:
+          type: number
+        createRole:
+          type: string
+        readListAuth:
+          type: string
+        readListLevel:
+          type: number
+        readListRole:
+          type: string
+        readAuth:
+          type: string
+        readLevel:
+          type: number
+        readRole:
+          type: string
+        updateAuth:
+          type: string
+        updateLevel:
+          type: number
+        updateRole:
+          type: string
+        deleteAuth:
+          type: string
+        deleteLevel:
+          type: number
+        deleteRole:
+          type: string
+        likeAuth:
+          type: string
+        likeLevel:
+          type: number
+        likeRole:
+          type: string
+        useComment:
+          type: boolean
+        commentCreateAuth:
+          type: string
+        commentCreateLevel:
+          type: number
+        commentCreateRole:
+          type: string
+        commentReadListAuth:
+          type: string
+        commentReadListLevel:
+          type: number
+        commentReadListRole:
+          type: string
+        commentDeleteAuth:
+          type: string
+        commentDeleteLevel:
+          type: number
+        commentDeleteRole:
+          type: string
+        commentLikeAuth:
+          type: string
+        commentLikeLevel:
+          type: number
+        commentLikeRole:
+          type: string
+        fileCreateAuth:
+          type: string
+        fileCreateLevel:
+          type: number
+        fileCreateRole:
+          type: string
+        fileReadAuth:
+          type: string
+        fileReadLevel:
+          type: number
+        fileReadRole:
+          type: string
+        attachImageSize:
+          type: number
+        attachFileSize:
+          type: number
+        attachFileSizeTotal:
+          type: number
+        updater:
+          type: string
+        deleter:
+          type: string
+        createdAt:
+          type: string
+        updatedAt:
+          type: string  
+
+    BoardSettingPost:
+      type: object
+      properties:
+        type:
+          type: string
+        subject:
+          type: string
+        createAuth:
+          type: string
+        createLevel:
+          type: number
+        createRole:
+          type: string
+        readListAuth:
+          type: string
+        readListLevel:
+          type: number
+        readListRole:
+          type: string
+        readAuth:
+          type: string
+        readLevel:
+          type: number
+        readRole:
+          type: string
+        updateAuth:
+          type: string
+        updateLevel:
+          type: number
+        updateRole:
+          type: string
+        deleteAuth:
+          type: string
+        deleteLevel:
+          type: number
+        deleteRole:
+          type: string
+        likeAuth:
+          type: string
+        likeLevel:
+          type: number
+        likeRole:
+          type: string
+        useComment:
+          type: boolean
+        commentCreateAuth:
+          type: string
+        commentCreateLevel:
+          type: number
+        commentCreateRole:
+          type: string
+        commentReadListAuth:
+          type: string
+        commentReadListLevel:
+          type: number
+        commentReadListRole:
+          type: string
+        commentDeleteAuth:
+          type: string
+        commentDeleteLevel:
+          type: number
+        commentDeleteRole:
+          type: string
+        commentLikeAuth:
+          type: string
+        commentLikeLevel:
+          type: number
+        commentLikeRole:
+          type: string
+        fileCreateAuth:
+          type: string
+        fileCreateLevel:
+          type: number
+        fileCreateRole:
+          type: string
+        fileReadAuth:
+          type: string
+        fileReadLevel:
+          type: number
+        fileReadRole:
+          type: string
+        attachImageSize:
+          type: number
+        attachFileSize:
+          type: number
+        attachFileSizeTotal:
+          type: number

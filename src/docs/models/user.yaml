@@ -1,0 +1,131 @@
+components:
+  schemas:
+    
+    UserList:
+      type: object
+      properties:
+        total:
+          type: number
+        list:
+          type: array
+          items:
+            allOf:
+              - properties:
+                  idx:
+                    type: number
+              - properties:
+                  userId:
+                    type: string
+                  name:
+                    type: string
+                  email:
+                    type: string
+                  phoneNumber:
+                    type: string
+                  address:
+                    type: string
+                  address2:
+                    type: string
+                  zipCode:
+                    type: string
+                  level:
+                    type: number
+                  role:
+                    type: string
+              - properties:
+                  createdAt:
+                    type: string
+                  updatedAt:
+                    type: string
+                  deletedAt:
+                    type: string
+
+    User:
+      type: object
+      properties:
+        userId:
+          type: string
+        name:
+          type: string
+        email:
+          type: string
+        phoneNumber:
+          type: string
+        address:
+          type: string
+        address2:
+          type: string
+        zipCode:
+          type: string
+        level:
+          type: number
+        role:
+          type: string
+
+    UserPost:
+      type: object
+      properties:
+        userId:
+          type: string
+          required: true
+          example: sample
+        password:
+          type: string
+          required: true
+          example: sample
+        passwordConfirm:
+          type: string
+          required: true
+          example: sample
+        name:
+          type: string
+          required: true
+          example: 홍길동
+        email:
+          type: string
+          required: true
+          example: sample@sample.com
+        phoneNumber:
+          type: string
+          example: 01012345678
+        address:
+          type: string
+          example: 서울시
+        address2:
+          type: string
+          example: 논현역
+        zipCode:
+          type: string
+          example: "12345"
+
+    UserPut:
+      type: object
+      properties:
+        newPassword:
+          type: string
+          required: true
+          example: sample
+        newPasswordConfirm:
+          type: string
+          required: true
+          example: sample
+        name:
+          type: string
+          required: true
+          example: 홍길동
+        email:
+          type: string
+          required: true
+          example: sample@sample.com
+        phoneNumber:
+          type: string
+          example: 01012345678
+        address:
+          type: string
+          example: 서울시
+        address2:
+          type: string
+          example: 논현역
+        zipCode:
+          type: string
+          example: "12345"

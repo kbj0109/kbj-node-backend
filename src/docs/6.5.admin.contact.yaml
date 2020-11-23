@@ -1,0 +1,143 @@
+paths:
+  /admin/contact:
+    get:
+      tags:
+        - 관리자 - 문의
+      summary: 목록
+      parameters:
+        - in: query
+          name: limit
+          default: 10
+          schema:
+            type: number
+        - in: query
+          name: offset
+          default: 0
+          schema:
+            type: number
+        - in: query
+          name: sort
+          schema:
+            type: string
+            enum: [createDesc,createAsc]
+        - in: query
+          name: search
+          schema:
+            type: string
+            enum: [subject,content,subjectContent,name,email,phoneNumber]
+        - in: query
+          name: searchKeyword
+          schema:
+            type: string
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ContactList"
+
+
+  /admin/contact/{contactId}:
+    get:
+      tags:
+        - 관리자 - 문의
+      summary: 상세
+      parameters:
+        - in: path
+          name: contactId
+          schema:
+            type: string
+          required: true
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Contact"
+
+    delete:
+      tags:
+        - 관리자 - 문의
+      summary: 삭제
+      parameters:
+        - in: path
+          name: contactId
+          description: "' , '를 기준으로 다중 삭제 요청 가능"
+          schema:
+            type: string
+          required: true
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Contact"
+
+
+  /admin/contact/{contactId}/reply:
+    post:
+      tags:
+        - 관리자 - 문의
+      summary: 답변 등록 (댓글)
+      parameters:
+        - in: path
+          name: contactId
+          schema:
+            type: string
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                content:
+                  type: string
+                  example: 관리자 문의 답변
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Comment"
+
+    get:
+      tags:
+        - 관리자 - 문의
+      summary: 답변 목록 (댓글)
+      parameters:
+        - in: path
+          name: contactId
+          schema:
+            type: string
+          required: true
+        - in: query
+          name: sort
+          schema:
+            type: string
+            enum: [createDesc, createAsc]
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CommentList"
+
+
+  /admin/contact/file/{fileId}:
+    get:
+      tags:
+        - 관리자 - 문의
+      summary: 파일 다운로드
+      parameters:
+        - in: path
+          name: fileId
+          schema:
+            type: string
+          required: true
+      responses:
+        200:
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary

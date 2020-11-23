@@ -1,0 +1,72 @@
+paths:
+  /admin/comments:
+    get:
+      tags:
+        - 관리자 - 댓글
+      summary: 목록
+      parameters:
+        - in: query
+          name: limit
+          default: 30
+          schema:
+            type: number
+        - in: query
+          name: offset
+          default: 0
+          schema:
+            type: number
+        - in: query
+          name: sort
+          schema:
+            type: string
+            enum: [createDesc, createAsc, likeDesc, likeAsc]
+        - in: query
+          name: search
+          schema:
+            type: string
+            enum: [ content, userId, name ]
+        - in: query
+          name: searchKeyword
+          schema:
+            type: string
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total:
+                    type: number
+                  list:
+                    type: array
+                    items:
+                      allOf:
+                        - $ref: "#/components/schemas/Comment"
+                        - properties:
+                            postSubject:
+                              type: string
+                            postCommentCount:
+                              type: number
+
+
+  /admin/comments/{commentId}:
+    delete:
+      tags:
+        - 관리자 - 댓글
+      summary: 삭제
+      parameters:
+        - in: path
+          name: commentId
+          description: "' , '를 기준으로 다중 삭제 요청 가능"
+          schema:
+            type: string
+          required: true
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Comment"

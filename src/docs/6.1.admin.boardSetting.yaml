@@ -1,0 +1,112 @@
+paths:
+  /admin/board-settings:
+    get:
+      tags:
+        - 관리자 - 게시판
+      summary: 목록
+      parameters:
+        - in: query
+          name: limit
+          default: 10
+          schema:
+            type: number
+        - in: query
+          name: offset
+          default: 0
+          schema:
+            type: number
+        - in: query
+          name: sort
+          schema:
+            type: string
+            enum: [createDesc, createAsc, updateDesc, updateAsc]
+        - in: query
+          name: search
+          schema:
+            type: string
+            enum: [subject, type, userId]
+        - in: query
+          name: searchKeyword
+          schema:
+            type: string
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BoardSettingList"
+
+    post: 
+      tags:
+        - 관리자 - 게시판
+      summary: 등록
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BoardSettingPost"
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BoardSetting"
+
+
+  /admin/board-settings/{boardId}:
+    get:
+      tags:
+        - 관리자 - 게시판
+      summary: 상세
+      parameters:
+        - in: path
+          name: boardId
+          schema:
+            type: string
+          required: true
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BoardSetting"
+
+    put:
+      tags:
+        - 관리자 - 게시판
+      summary: 수정
+      parameters:
+        - in: path
+          name: boardId
+          schema:
+            type: string
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BoardSettingPost"
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BoardSetting"
+
+    delete:
+      tags:
+        - 관리자 - 게시판
+      summary: 삭제
+      description: 해당 게시판으로 등록된 Article / File / Comment / Like / Tag 삭제
+      parameters:
+        - in: path
+          name: boardId
+          schema:
+            type: string
+          required: true
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BoardSetting"

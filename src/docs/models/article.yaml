@@ -1,0 +1,183 @@
+components:
+  schemas:
+
+    ArticleList:
+      type: object
+      properties:
+        total:
+          type: number
+        list:
+          type: array
+          items:
+            allOf:
+              - properties:
+                  idx:
+                    type: number
+                  id:
+                    type: string
+                  userId:
+                    type: string
+                  boardType:
+                    type: string
+                  subject:
+                    type: string
+                  attachFiles:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/File"
+                  name:
+                    type: string
+                  category:
+                    type: string
+                  description:
+                    type: string
+                  email:
+                    type: string
+                  link:
+                    type: string
+                  secret:
+                    type: boolean
+                  notice:
+                    type: boolean
+                  viewCount:
+                    type: number
+                  likeCount:
+                    type: number
+                  commentCount:
+                    type: number
+                  field1:
+                    type: string
+                  field2:
+                    type: string
+                  field3:
+                    type: string
+                  updater:
+                    type: string
+                  createdAt:
+                    type: string
+                  updatedAt:
+                    type: string
+                  liked:
+                    type: boolean
+                    description: 비회원일 경우 항상 false
+                  useComment:
+                    type: boolean
+                  tags:
+                    type: array
+                    items:
+                      type: string
+              - properties:
+                  visible:
+                    type: boolean
+                  visibleStart:
+                    type: string
+                  visibleEnd:
+                    type: string
+                  order:
+                    type: number
+
+    Article:
+      type: object
+      properties:
+        id:
+          type: string
+        boardType:
+          type: string
+        subject:
+          type: string
+        content:
+          type: string      
+        attachFiles:
+          type: array
+          items:
+            $ref: "#/components/schemas/File"
+        userId:
+          type: string
+        name:
+          type: string
+        category:
+          type: string
+        description:
+          type: string
+        email:
+          type: string
+        link:
+          type: string
+        secret:
+          type: boolean
+        notice:
+          type: boolean
+        field1:
+          type: string
+        field2:
+          type: string
+        field3:
+          type: string
+        viewCount:
+          type: number
+        likeCount:
+          type: number
+        liked:
+          type: boolean
+        useComment:
+          type: boolean
+        createdAt:
+          type: string
+        updatedAt:
+          type: string
+        updater:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+
+    ArticlePost:
+      type: object
+      properties:
+        subject:
+          type: string
+          example: 제목
+        content:
+          type: string
+          example: 내용
+        attachFiles:
+          type: array
+          example: []
+          items:
+            $ref: "#/components/schemas/File"
+        name:
+          type: string
+          example: 'guest'
+          description: 비회원 한정
+        password:
+          type: string
+          example: 'guest'
+          description: 비회원 한정
+        category:
+          type: string
+          example: ''
+        description:
+          type: string
+          example: ''
+        email:
+          type: string
+          example: sample@sample.com
+        link:
+          type: string
+          example: ''
+        secret:
+          type: boolean
+          default: false
+        field1:
+          type: string
+          example: ''
+        field2:
+          type: string
+          example: ''
+        field3:
+          type: string
+          example: ''
+        tags:
+          type: string
+          example: '사과,배,귤,망고'

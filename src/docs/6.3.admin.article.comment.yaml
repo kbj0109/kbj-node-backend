@@ -1,0 +1,116 @@
+paths:
+  /admin/articles/{boardType}/{articleId}/comments:
+    get:
+      tags:
+        - 관리자 - 게시물
+      summary: 댓글 목록
+      parameters:
+        - in: path
+          name: boardType
+          default: default
+          schema:
+            type: string
+          required: true
+        - in: path
+          name: articleId
+          schema:
+            type: string
+          required: true
+        - in: query
+          name: sort          
+          schema:
+            type: string
+            enum: [createDesc, createAsc, likeDesc, likeAsc]
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CommentList"
+
+    post:
+      tags:
+      - 관리자 - 게시물
+      summary: 댓글 등록
+      parameters:
+        - in: path
+          name: boardType
+          default: default
+          schema:
+            type: string
+          required: true
+        - in: path
+          name: articleId
+          schema:
+            type: string
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CommentPost"
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Comment"
+
+  /admin/articles/{boardType}/comments/{commentId}:
+    delete:
+      tags:
+        - 관리자 - 게시물
+      summary: 댓글 삭제
+      parameters:
+        - in: path
+          name: boardType
+          default: default
+          schema:
+            type: string
+          required: true
+        - in: path
+          name: commentId
+          schema:
+            type: string
+          required: true
+        - in: header
+          name: password
+          description: Artile 댓글 비회원 한정
+          schema:
+            type: string
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Comment"
+
+  /admin/articles/{boardType}/comments/{commentId}/like:
+    post:
+      tags:
+        - 관리자 - 게시물
+      summary: 댓글 추천
+      parameters:
+        - in: path
+          name: boardType
+          default: default
+          schema:
+            type: string
+          required: true
+        - in: path
+          name: commentId
+          schema:
+            type: string
+          required: true
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                properties:
+                  postId:
+                    type: string
+                  liked:
+                    type: boolean
+                  likeCount:
+                    type: number

@@ -1,0 +1,212 @@
+paths:
+  /user/join:
+    post:
+      tags:
+        - 회원
+      summary: 회원 등록
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserPost"
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+
+
+  /user/profile:
+    get:
+      tags:
+        - 회원
+      summary: 내 정보 가져오기
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+
+    put:
+      tags:
+        - 회원
+      summary: 내 정보 수정
+      requestBody:
+        content:
+          application/json:
+            schema:
+              allOf:
+                - type: object
+                  properties:
+                    password:
+                      type: string
+                      example: sample
+                - $ref: "#/components/schemas/UserPut"
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+
+
+  /user/withdrawal:
+    delete:
+      tags:
+        - 회원
+      summary: 회원 탈퇴
+      parameters:
+        - in: header
+          name: password
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+
+
+  /user/checkId/{userId}:
+    get:
+      tags:
+        - 회원
+      summary: 아이디 중복 확인
+      parameters:
+        - in: path
+          name: userId
+          default: foo
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: string
+
+
+  /user/find-id:
+    post:
+      tags:
+        - 회원
+      summary: 아이디 찾기
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                name:
+                  type: string
+                  required: true
+                  example: 홍길동
+                email:
+                  type: string
+                  required: true
+                  example: sample@sample.com
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                properties:
+                  userId:
+                    type: string
+
+
+  /user/find-pw/cert-num:
+    post:
+      tags:
+        - 회원
+      summary: 비밀번호 찾기
+      description:  발급된 인증번호 이메일로 발송
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                userId:
+                  type: string
+                  required: true
+                  example: sample
+                name:
+                  type: string
+                  required: true
+                  example: 홍길동
+                email:
+                  type: string
+                  required: true
+                  example: sample@sample.com
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                properties:
+                  tokenExpired:
+                    type: string
+
+
+  /user/find-pw/cert-confirm:
+    post:
+      tags:
+        - 회원
+      summary: 비밀번호 찾기 - 인증번호 확인
+      description: 이메일로 발송된 인증번호 확인 후 token으로 입력
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                userId:
+                  type: string
+                  required: true
+                  example: sample
+                token:
+                  type: string
+                  required: true
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                properties:
+                  token:
+                    type: string
+                  tokenExpired:
+                    type: string
+
+
+  /user/find-pw/change:
+    post:
+      tags:
+        - 회원
+      summary: 비밀번호 찾기 - 비밀번호 재설정
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                userId:
+                  type: string
+                  required: true
+                  example: sample
+                newPassword:
+                  type: string
+                  required: true
+                  example: sample
+                newPasswordConfirm:
+                  type: string
+                  required: true
+                  example: sample
+                token:
+                  type: string
+                  required: true
+      responses:
+        200:
+          description: 비밀번호 재설정 완료
