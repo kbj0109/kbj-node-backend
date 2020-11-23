@@ -29,11 +29,11 @@ deploy-dev:
     - apt install -y sshpass rsync
 
   script:
-    - rsync --rsh="sshpass -p $DEV_PASSWORD ssh -o StrictHostKeyChecking=no -l $DEV_USER"
+    - rsync --rsh="sshpass -p kbjnodebackend ssh -o StrictHostKeyChecking=no -l root"
         -chav --delete --filter=":- .gitignore" --exclude .git/ 
-        ./ $DEV_USER@$DEV_HOST:$DEV_PATH
-    - sshpass -p $DEV_PASSWORD ssh -o StrictHostKeyChecking=no $DEV_USER@$DEV_HOST 
-        "cd $DEV_PATH/docker/development && docker-compose -p kbj_node up -d --build"
+        ./ root@132.145.95.10:/project/kbj-node-backend
+    - sshpass -p kbjnodebackend ssh -o StrictHostKeyChecking=no root@132.145.95.10 
+        "cd /project/kbj-node-backend/docker/development && docker-compose -p kbj_node up -d --build"
 
   only:
     - master
