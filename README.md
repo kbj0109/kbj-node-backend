@@ -10,16 +10,23 @@
 # 사용 스텍
 1. JWT 토큰 인증을 사용한 로그인 기능
 
-2. Swagger API Document 작성
+2. **Swagger API Document** 작성
 
-3. JEST 기반 Integration 통합 테스트
+3. JEST 기반 **Integration 통합 테스트**
 
-4. Gitlab 과 Jenkins를 사용한 CI/CD 구현
+4. Gitlab 과 Jenkins를 사용한 **CI/CD 환경 구성**
 
 5. ESLint 와 Husky를 사용한 코드 포맷 정리
 
 6. Sequelize-CLI 를 사용한 DB 관리 및 수정
 
-7. SSL 인증서러 HTTPS 적용
+7. **SSL 인증서러 HTTPS 적용**
 
-8. docker 를 사용한 프로젝트 구동
+8. **docker** 를 사용한 프로젝트 구동
+
+
+
+<hr>
+
+## - 개인 프로젝트 배포 https://kbj.kbj0109.com/docs/ 
+## - Github 코드 링크 https://github.com/kbj0109/kbj-node-backend
