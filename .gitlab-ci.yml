@@ -14,6 +14,7 @@ api-test:
 
   script:
     - echo $DEV_USER
+    - echo $DEV_PATH
     - cd docker/test && docker-compose -p kbj_node up --build --abort-on-container-exit
 
   only:
