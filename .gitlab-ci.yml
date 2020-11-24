@@ -13,6 +13,7 @@ api-test:
     - apk add --no-cache docker-compose
 
   script:
+    - echo $DEV_USER
     - cd docker/test && docker-compose -p kbj_node up --build --abort-on-container-exit
 
   only:
