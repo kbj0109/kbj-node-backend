@@ -19,3 +19,7 @@
 5. ESLint 와 Husky를 사용한 코드 포맷 정리
 
 6. Sequelize-CLI 를 사용한 DB 관리 및 수정
+
+7. SSL 인증서러 HTTPS 적용
+
+8. docker 를 사용한 프로젝트 구동
